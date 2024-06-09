@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="Theme.EzloProject" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Base.Theme.EzloProject" parent="Theme.AppCompat.Light.NoActionBar">
+        // make status bar icons colour grey
+        <item name="android:windowLightStatusBar">true</item>
+        // override the notch area
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        // make status bar transparent
+        <item name="android:windowTranslucentStatus">true</item>
+        // make navigation are transparent
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+    <style name="Theme.EzloProject" parent="Base.Theme.EzloProject" />
 </resources>

@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Ezlo Project</string>
+    <string name="app_name">Test Project</string>
+    <string name="profile_full_name">Oleksii Falatiuk</string>
 </resources>
