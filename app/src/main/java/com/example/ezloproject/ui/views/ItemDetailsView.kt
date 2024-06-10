@@ -20,12 +20,15 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -48,6 +51,11 @@ fun ItemDetailsView(
 ) {
     val iconMapper: IconMapper = remember { IconMapper() }
     val updatedTitle = remember { mutableStateOf("") }
+    LaunchedEffect(Unit) {
+        updatedTitle.value = itemEntity?.title?.ifEmpty {
+            itemEntity.platform
+        }.toString()
+    }
     Column(
         Modifier
             .fillMaxWidth()
@@ -77,9 +85,6 @@ fun ItemDetailsView(
             }
             Spacer(modifier = Modifier.width(16.dp))
             if (isEditMode) {
-                updatedTitle.value = itemEntity?.title?.ifEmpty {
-                    itemEntity.platform
-                }.toString()
                 UserDataItem(updatedTitle = updatedTitle)
             } else {
                 Text(
@@ -133,13 +138,19 @@ fun ItemDetailsTextView(text: String) {
 @Composable
 fun UserDataItem(updatedTitle: MutableState<String>) {
     val lightBlue = Color(0xffd8e6ff)
+    val focusRequester = remember { FocusRequester() }
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
     Column(
         modifier = Modifier
             .wrapContentHeight()
             .fillMaxWidth()
     ) {
         TextField(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .focusRequester(focusRequester),
             value = updatedTitle.value,
             colors = TextFieldDefaults.textFieldColors(
                 backgroundColor = lightBlue,
