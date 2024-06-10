@@ -1,5 +1,6 @@
 package com.example.ezloproject.ui.views
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,8 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -34,28 +33,23 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ezloproject.R
-import com.example.ezloproject.data.model.locale.ItemEntity
+import com.example.ezloproject.data.model.local.ItemEntity
 import com.example.ezloproject.ui.IconMapper
+import kotlin.random.Random
 
 @Composable
 fun ItemDetailsView(
     itemEntity: ItemEntity?,
     isEditMode: Boolean,
+    updatedTitle: MutableState<String>,
     onUpdatedTitleSaveClick: (title: String?, id: Int?) -> Unit = { _, _ -> }
 ) {
     val iconMapper: IconMapper = remember { IconMapper() }
-    val updatedTitle = remember { mutableStateOf("") }
-    LaunchedEffect(Unit) {
-        updatedTitle.value = itemEntity?.title?.ifEmpty {
-            itemEntity.platform
-        }.toString()
-    }
     Column(
         Modifier
             .fillMaxWidth()
@@ -76,10 +70,9 @@ fun ItemDetailsView(
                     .clip(RoundedCornerShape(8.dp))
                     .background(color = colorResource(id = R.color.accent))
             ) {
-                Icon(
+                Image(
                     modifier = Modifier.align(Alignment.Center),
                     painter = painterResource(iconMapper.getIcon(itemEntity?.platform ?: "")),
-                    tint = colorResource(id = R.color.text),
                     contentDescription = null
                 )
             }
@@ -171,14 +164,19 @@ fun UserDataItem(updatedTitle: MutableState<String>) {
 @Preview
 @Composable
 fun PreviewItemDetailsView() {
+    val updatedTitle = remember {
+        mutableStateOf("")
+    }
     ItemDetailsView(
         itemEntity = ItemEntity(
-            pkDevice = 0,
+            id = Random.nextInt(),
+            pkDevice = 1,
             macAddress = "macAddress",
             firmware = "firmware",
-            platform = "TEST TEST TEST",
+            platform = "platform",
             title = "title"
         ),
         isEditMode = true,
+        updatedTitle = updatedTitle
     )
 }

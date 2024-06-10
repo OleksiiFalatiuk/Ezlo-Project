@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,20 +30,24 @@ fun DeleteDialog(
             containerColor = Color.White,
             onDismissRequest = onCancel,
             title = {
-                DialogTitle(text = "Are you sure?")
+                DialogTitle(text = stringResource(id = R.string.are_you_sure))
             },
             text = {
-                DialogText(text = "Do you want to delete $name?")
+                DialogText(text = String.format(
+                    stringResource(id = R.string.delete_format),
+                    stringResource(id = R.string.do_you_want_to_delete),
+                    name
+                ))
             },
             confirmButton = {
                 DialogButton(
-                    text = "Delete", // todo: use string resource
+                    text = stringResource(id = R.string.delete),
                     onClick = onDelete
                 )
             },
             dismissButton = {
                 DialogButton(
-                    text = "Cancel", // todo: use string resource
+                    text = stringResource(id = R.string.cancel),
                     onClick = onCancel
                 )
             }
@@ -60,6 +65,7 @@ private fun DialogTitle(
         color = colorResource(id = R.color.text),
         fontSize = 24.sp,
         fontFamily = FontFamily(Font(R.font.sf_pro_display_semibold)),
+        modifier = modifier
     )
 }
 
@@ -73,6 +79,7 @@ private fun DialogText(
         color = colorResource(id = R.color.text),
         fontSize = 16.sp,
         fontFamily = FontFamily(Font(R.font.sf_pro_display_regular)),
+        modifier = modifier
     )
 }
 
@@ -100,7 +107,7 @@ private fun DialogButton(
 private fun PreviewDeleteDialog() {
     var openDialog by remember { mutableStateOf(true) }
     DeleteDialog(
-        name = "Item",
+        name = stringResource(id = R.string.item),
         openDialog = openDialog,
         onDelete = { openDialog = false },
         onCancel = { openDialog = false }
@@ -110,5 +117,5 @@ private fun PreviewDeleteDialog() {
 @Preview
 @Composable
 private fun PreviewDialogButton() {
-    DialogButton(text = "Delete")
+    DialogButton(text = stringResource(id = R.string.delete))
 }

@@ -2,6 +2,7 @@ package com.example.ezloproject.ui.views
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
@@ -25,13 +26,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ezloproject.R
-import com.example.ezloproject.data.model.locale.ItemEntity
+import com.example.ezloproject.data.model.local.ItemEntity
+import kotlin.random.Random
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -65,10 +68,9 @@ fun ItemView(
                     .clip(RoundedCornerShape(8.dp))
                     .background(color = colorResource(id = R.color.accent))
             ) {
-                Icon(
+                Image(
                     modifier = Modifier.align(Alignment.Center),
                     painter = painterResource(icon),
-                    tint = colorResource(id = R.color.text),
                     contentDescription = null
                 )
             }
@@ -99,12 +101,12 @@ fun ItemView(
                         shape = RoundedCornerShape(8.dp)
                     )
                     .clickable {
-                         onClick(true)
+                        onClick(true)
                     },
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = "Edit",
+                    text = stringResource(id = R.string.edit),
                     fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.sf_pro_display_semibold))
                 )
@@ -130,11 +132,12 @@ fun ItemView(
 fun PreviewItemView() {
     ItemView(
         itemEntity = ItemEntity(
-            pkDevice = 0,
+            id = Random.nextInt(),
+            pkDevice = 1,
             macAddress = "macAddress",
             firmware = "firmware",
-            platform = "TEST TEST TEST",
-            title = ""
+            platform = "platform",
+            title = "title"
         ),
         icon = R.drawable.vera_edge_big
     )

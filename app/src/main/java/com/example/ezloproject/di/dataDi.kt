@@ -1,8 +1,9 @@
 package com.example.ezloproject.di
 
-import com.example.ezloproject.data.repository.ItemRemoteRepository
+import com.example.ezloproject.data.repository.ItemRepository
+import com.example.ezloproject.data.repository.ItemRepositoryImpl
 import org.koin.dsl.module
 
 val dataDi = module {
-    single { ItemRemoteRepository(get(), get()) }
+    single<ItemRepository> { ItemRepositoryImpl(get(), get()) }
 }

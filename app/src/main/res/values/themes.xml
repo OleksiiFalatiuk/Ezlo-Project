@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="Base.Theme.EzloProject" parent="Theme.AppCompat.Light.NoActionBar">
         // make status bar icons colour grey
         <item name="android:windowLightStatusBar">true</item>
@@ -10,5 +11,13 @@
         // make navigation are transparent
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
+
     <style name="Theme.EzloProject" parent="Base.Theme.EzloProject" />
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_round</item>
+        <item name="windowSplashScreenAnimationDuration">500</item>
+        <item name="postSplashScreenTheme">@style/Theme.EzloProject</item>
+    </style>
 </resources>

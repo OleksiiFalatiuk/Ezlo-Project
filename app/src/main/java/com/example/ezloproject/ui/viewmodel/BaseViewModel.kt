@@ -1,10 +1,8 @@
 package com.example.ezloproject.ui.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 
 open class BaseViewModel : ViewModel() {
-    protected val _errorMessage = MutableLiveData<String?>(null)
-    val errorMessage: LiveData<String?> = _errorMessage
+    val errorMessage = mutableStateOf<String?>(null)
 }

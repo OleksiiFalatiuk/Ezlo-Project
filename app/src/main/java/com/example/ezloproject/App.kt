@@ -6,12 +6,12 @@ import com.example.ezloproject.di.retrofitDi
 import com.example.ezloproject.di.roomDi
 import com.example.ezloproject.di.uiDi
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.GlobalContext
+import org.koin.core.context.GlobalContext.startKoin
 
-class App: Application() {
+class App : Application() {
     override fun onCreate() {
         super.onCreate()
-        GlobalContext.startKoin {
+        startKoin {
             androidContext(this@App)
             modules(listOf(uiDi, roomDi, retrofitDi, dataDi))
         }
