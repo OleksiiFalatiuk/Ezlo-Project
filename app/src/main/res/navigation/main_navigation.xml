@@ -11,5 +11,20 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.ezloproject.ui.main.MainFragment"
-        android:label="MainFragment" />
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_itemDetailsFragment"
+            app:destination="@id/itemDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemDetailsFragment"
+        android:name="com.example.ezloproject.ui.details.ItemDetailsFragment"
+        android:label="ItemDetailsFragment" >
+        <argument
+            android:name="itemId"
+            app:argType="integer" />
+        <argument
+            android:name="isEditMode"
+            app:argType="boolean" />
+    </fragment>
 </navigation>

@@ -20,7 +20,7 @@ data class DeviceDataResponse(
     @SerializedName("Server_Account")
     val serverAccount: String?,
     @SerializedName("InternalIP")
-    val internalIP: String?,
+    val internalIp: String?,
     @SerializedName("LastAliveReported")
     val lastAliveReported: String?,
     @SerializedName("Platform")

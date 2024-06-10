@@ -1,6 +1,10 @@
 package com.example.ezloproject.ui.views
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,13 +33,24 @@ import androidx.compose.ui.unit.sp
 import com.example.ezloproject.R
 import com.example.ezloproject.data.model.locale.ItemEntity
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ItemView(itemEntity: ItemEntity) {
+fun ItemView(
+    modifier: Modifier = Modifier,
+    itemEntity: ItemEntity,
+    @DrawableRes icon: Int,
+    onClick: (isEditMode: Boolean) -> Unit = {},
+    onLongClick: () -> Unit = {}
+) {
     Column(
-        Modifier
+        modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .background(color = colorResource(id = R.color.primary))
+            .combinedClickable(
+                onClick = { onClick(false) },
+                onLongClick = onLongClick
+            )
     ) {
         Row(
             Modifier
@@ -49,11 +64,20 @@ fun ItemView(itemEntity: ItemEntity) {
                     .size(48.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .background(color = colorResource(id = R.color.accent))
-            )
+            ) {
+                Icon(
+                    modifier = Modifier.align(Alignment.Center),
+                    painter = painterResource(icon),
+                    tint = colorResource(id = R.color.text),
+                    contentDescription = null
+                )
+            }
             Spacer(modifier = Modifier.width(8.dp))
             Column(Modifier.wrapContentSize()) {
                 Text(
-                    text = itemEntity.title,
+                    text = itemEntity.title.ifEmpty {
+                        itemEntity.platform
+                    },
                     fontSize = 14.sp,
                     color = colorResource(id = R.color.text),
                     fontFamily = FontFamily(Font(R.font.sf_pro_display_semibold)),
@@ -67,16 +91,36 @@ fun ItemView(itemEntity: ItemEntity) {
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .background(
+                        color = colorResource(id = R.color.accent),
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .clickable {
+                         onClick(true)
+                    },
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = "Edit",
+                    fontSize = 16.sp,
+                    fontFamily = FontFamily(Font(R.font.sf_pro_display_semibold))
+                )
+            }
+            Spacer(modifier = Modifier.width(8.dp))
             Icon(
                 painter = painterResource(id = R.drawable.ic_arrow),
                 tint = colorResource(id = R.color.disabled),
                 contentDescription = null
             )
         }
-        Spacer(modifier = Modifier
-            .height(1.dp)
-            .fillMaxWidth()
-            .background(color = colorResource(id = R.color.text))
+        Spacer(
+            modifier = Modifier
+                .height(1.dp)
+                .fillMaxWidth()
+                .background(color = colorResource(id = R.color.text))
         )
     }
 }
@@ -86,10 +130,12 @@ fun ItemView(itemEntity: ItemEntity) {
 fun PreviewItemView() {
     ItemView(
         itemEntity = ItemEntity(
-            1,
-            45013855,
-            "platform",
-            "title"
-        )
+            pkDevice = 0,
+            macAddress = "macAddress",
+            firmware = "firmware",
+            platform = "TEST TEST TEST",
+            title = ""
+        ),
+        icon = R.drawable.vera_edge_big
     )
 }
